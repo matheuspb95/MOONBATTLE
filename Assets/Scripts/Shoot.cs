@@ -15,7 +15,7 @@ public class Shoot : MonoBehaviour {
         if (Input.GetButtonDown("Fire1"))
         {
             GameObject bullet = (GameObject)Instantiate(Prefab, transform.position, Quaternion.Euler(transform.eulerAngles));
-
+            bullet.SetActive(true);
             float dirx = Mathf.Cos(Mathf.Deg2Rad * body.rotation);
             float diry = Mathf.Sin(Mathf.Deg2Rad * body.rotation);
 

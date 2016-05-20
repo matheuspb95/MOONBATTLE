@@ -6,6 +6,7 @@ public class Movement : MonoBehaviour {
     public float velocity;
     public float maxVelocity;
     public float JumpForce;
+    public float gravityForce;
     bool canJump;
 	// Use this for initialization
 	void Start () {
