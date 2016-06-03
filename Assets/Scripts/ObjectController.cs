@@ -5,15 +5,15 @@ using System.Collections.Generic;
 
 public class ObjectController : MonoBehaviour
 {
-    protected SceneScript scenemanager;
-
+    protected GenericSceneManager scenemanager;
+    protected Rigidbody2D body;
     public Dictionary<string, AudioSource> Sounds;
 
     public virtual void Start()
     {
-        scenemanager = SceneScript.manager;
+        scenemanager = GenericSceneManager.manager;
         Sounds = new Dictionary<string, AudioSource>();
-
+        body = GetComponent<Rigidbody2D>();
         foreach(AudioSource audio in GetComponents<AudioSource>())
         {
             Debug.Log(audio.clip.name);

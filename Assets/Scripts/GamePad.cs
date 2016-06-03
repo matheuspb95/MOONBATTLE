@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using UnityEngine.Events;
 
 public class GamePad : MonoBehaviour {
     
@@ -24,15 +25,18 @@ public class GamePad : MonoBehaviour {
             {
                 if (Input.GetKeyDown(AC.button))
                 {
-                    SendAction(AC.pressed);
+                    //SendAction(AC.pressed);
+                    AC.pressed.Invoke();
                 }
                 else if (Input.GetKey(AC.button))
                 {
-                    SendAction(AC.hold);
+                    //SendAction(AC.hold);
+                    AC.hold.Invoke();
                 }
                 else if (Input.GetKeyUp(AC.button))
                 {
-                    SendAction(AC.released);
+                    //SendAction(AC.released);
+                    AC.released.Invoke();
                 }
             }
             catch { }
@@ -68,7 +72,7 @@ public class GamePad : MonoBehaviour {
 [Serializable]
 public struct ActionButton{
     public KeyCode button;
-    public string pressed;
-    public string hold;
-    public string released;
+    public UnityEvent pressed;
+    public UnityEvent hold;
+    public UnityEvent released;
 }
