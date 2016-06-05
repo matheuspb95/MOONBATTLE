@@ -24,8 +24,10 @@ public class MainScene : GenericSceneManager
             {
                 if (obj1.GetComponent<Movement>().attacking && !obj2.GetComponent<Movement>().attacking)
                 {
-                    obj2.GetComponent<Movement>().ReceiveAttack(obj1.GetComponent<Rigidbody2D>().velocity);
+                    obj2.GetComponent<LifeManager>().ReceiveAttack(obj1.GetComponent<Rigidbody2D>().velocity);
+                    obj2.GetComponent<LifeManager>().LastAttacker = obj1.gameObject;
                     obj1.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                    
                     
 
                 }
@@ -41,6 +43,9 @@ public class MainScene : GenericSceneManager
             {
                 obj1.GetComponent<Movement>().canJump = true;
                 //obj1.GetComponent<Movement>().canAttack = true;
+            }else if (obj2.CompareTag("Limits"))
+            {
+                obj2.GetComponent<LifeManager>().Die();
             }
         }
     }

@@ -7,13 +7,10 @@ public class Movement : ObjectController {
     public float JumpForce;
     public float gravityForce;
     public float AttackForce;
-    public int DamageTaken;
-    public float initialLaunchForce;
     public bool canJump;
     public bool canAttack;
     public bool attacking;
     float walkDirection;
-    public int PlayerNumber;
 	// Use this for initialization
 	public override void Start () {
         base.Start();
@@ -65,8 +62,8 @@ public class Movement : ObjectController {
     {
         if (canJump)
         {
-            float dirx = Mathf.Cos(Mathf.Deg2Rad * body.rotation - 90);
-            float diry = Mathf.Sin(Mathf.Deg2Rad * body.rotation - 90);
+            float dirx = Mathf.Cos(Mathf.Deg2Rad * (body.rotation - 90));
+            float diry = Mathf.Sin(Mathf.Deg2Rad * (body.rotation - 90));
 
             Vector2 force = new Vector2(dirx, diry) * JumpForce;
             body.AddForce(force);
@@ -103,10 +100,5 @@ public class Movement : ObjectController {
         attacking = false;
     }
 
-    public void ReceiveAttack(Vector2 direction) {
-        Vector2 vel = (initialLaunchForce + DamageTaken) * direction.normalized;
-        body.AddForce(vel);
-        DamageTaken += 50;
-        GameObject.FindObjectOfType<UiController>().UpdateDamage(PlayerNumber, DamageTaken/6);
-    }
+
 }
