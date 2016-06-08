@@ -8,6 +8,17 @@ public class UiController : MonoBehaviour {
     public Text damageTxt2;
     public Text damageTxt3;
     public Text damageTxt4;
+    public List<Text> scores = new List<Text>();
+    public void DecreaseLife(GameObject lifesContainer)
+    {
+        GameObject lifeObj = lifesContainer.transform.GetChild(lifesContainer.transform.childCount - 1).gameObject;
+        Destroy(lifeObj);
+    }
+
+    public void UpdateKills(int player, int Kills)
+    {
+        scores[player-1].text = "Kills: " + Kills;
+    }
 
     public void UpdateDamage(int player, int damage)
     {

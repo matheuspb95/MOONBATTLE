@@ -10,6 +10,7 @@ public class Movement : ObjectController {
     public bool canJump;
     public bool canAttack;
     public bool attacking;
+    public ParticleSystem smoke;
     float walkDirection;
 	// Use this for initialization
 	public override void Start () {
@@ -41,13 +42,19 @@ public class Movement : ObjectController {
         */
 	}
 
+    public void SetEmission(bool emit)
+    {
+        smoke.GetComponent<ParticleEmitter>().enabled = emit;
+    }
+
     public void Walk(float direction)
     {
         if (canAttack)
         {
+            
             walkDirection = direction;
             if (direction < 0) transform.localScale = new Vector3(1, 1);
-            else if (direction > 0) transform.localScale = new Vector3(1, -1);
+            else if (direction > 0) transform.localScale = new Vector3(-1, 1);
             float dirx = Mathf.Cos(Mathf.Deg2Rad * body.rotation);
             float diry = Mathf.Sin(Mathf.Deg2Rad * body.rotation);
 

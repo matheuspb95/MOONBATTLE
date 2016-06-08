@@ -3,17 +3,22 @@ using System.Collections;
 
 public class MainScene : GenericSceneManager
 {
-
+    public GameObject gameOver;
     // Use this for initialization
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    public void GameOver()
+    {
+        gameOver.SetActive(true);
     }
 
     public override void EnterCollision(GameObject obj1, GameObject obj2)
@@ -27,9 +32,6 @@ public class MainScene : GenericSceneManager
                     obj2.GetComponent<LifeManager>().ReceiveAttack(obj1.GetComponent<Rigidbody2D>().velocity);
                     obj2.GetComponent<LifeManager>().LastAttacker = obj1.gameObject;
                     obj1.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                    
-                    
-
                 }
                 else if (obj1.GetComponent<Movement>().attacking && obj2.GetComponent<Movement>().attacking)
                 {
@@ -42,10 +44,10 @@ public class MainScene : GenericSceneManager
             }else if (obj2.CompareTag("Moon"))
             {
                 obj1.GetComponent<Movement>().canJump = true;
-                obj1.GetComponent<Rigidbody2D>().drag = 3;
+                //obj1.GetComponent<Rigidbody2D>().drag = 3;
             }else if (obj2.CompareTag("Limits"))
             {
-                obj2.GetComponent<LifeManager>().Die();
+                obj1.GetComponent<LifeManager>().Die();
             }
         }
     }
@@ -57,7 +59,7 @@ public class MainScene : GenericSceneManager
             if (obj2.CompareTag("Moon"))
             {
                 obj1.GetComponent<Movement>().canJump = false;
-                obj1.GetComponent<Rigidbody2D>().drag = 0;
+                //obj1.GetComponent<Rigidbody2D>().drag = 0;
             }
         }
     }

@@ -5,6 +5,7 @@ public class CenterGravity : MonoBehaviour {
     public float gravity;
     Rigidbody2D body;
     public float MaxDistance;
+    public float DragDistance;
 	// Use this for initialization
 	void Start () {
         body = GetComponent<Rigidbody2D>();
@@ -18,6 +19,13 @@ public class CenterGravity : MonoBehaviour {
             if(b != body)
             {
                 float dist = Vector2.Distance((Vector2)transform.position, b.position);
+                if(DragDistance > dist)
+                {
+                    b.drag = 3;
+                }else
+                {
+                    b.drag = 1;
+                }
                 if (MaxDistance > dist)
                 {
                     Vector3 dir = (Vector2)transform.position - b.position;
