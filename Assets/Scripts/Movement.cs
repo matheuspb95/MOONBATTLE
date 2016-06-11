@@ -11,10 +11,13 @@ public class Movement : ObjectController {
     public bool canAttack;
     public bool attacking;
     public ParticleSystem smoke;
+    public float DashTime;
     float walkDirection;
 	// Use this for initialization
 	public override void Start () {
         base.Start();
+        var em = smoke.emission;
+        em.enabled = false;
         canJump = false;
         canAttack = true;
         walkDirection = 0;
@@ -44,17 +47,17 @@ public class Movement : ObjectController {
 
     public void SetEmission(bool emit)
     {
-        smoke.GetComponent<ParticleEmitter>().enabled = emit;
+        var em = smoke.emission;
+        em.enabled = emit;
     }
 
     public void Walk(float direction)
     {
         if (canAttack)
         {
-            
             walkDirection = direction;
-            if (direction < 0) transform.localScale = new Vector3(1, 1);
-            else if (direction > 0) transform.localScale = new Vector3(-1, 1);
+            if (direction < 0) transform.localScale = new Vector3(2, -2);
+            else if (direction > 0) transform.localScale = new Vector3(-2, -2);
             float dirx = Mathf.Cos(Mathf.Deg2Rad * body.rotation);
             float diry = Mathf.Sin(Mathf.Deg2Rad * body.rotation);
 
@@ -77,35 +80,34 @@ public class Movement : ObjectController {
         }        
     }
 
-    public void Attack()
+    IEnumerator Dash()
     {
-        if(walkDirection != 0 && canAttack)
+        float EndTime = Time.time + DashTime;
+        while(EndTime > Time.time)
         {
+            yield return new WaitForFixedUpdate();
             attacking = true;
             canAttack = false;
-            if (walkDirection < 0) transform.localScale = new Vector3(1, 1);
-            else if (walkDirection > 0) transform.localScale = new Vector3(1, -1);
+            if (walkDirection < 0) transform.localScale = new Vector3(2, -2);
+            else if (walkDirection > 0) transform.localScale = new Vector3(-2, -2);
+            Debug.Log(body.rotation);
+            body.rotation = body.rotation - 1f;
             float dirx = Mathf.Cos(Mathf.Deg2Rad * body.rotation);
             float diry = Mathf.Sin(Mathf.Deg2Rad * body.rotation);
 
             Vector2 vel = -AttackForce * new Vector2(dirx, diry) * walkDirection;
-            body.AddForce(vel);
-            StartCoroutine(CanAttack());
-            StartCoroutine(EndAttack());
+            body.velocity = vel;
         }
-    }
-
-    IEnumerator CanAttack()
-    {
-        yield return new WaitForSeconds(0.75f);
+        body.velocity = Vector2.zero;
         canAttack = true;
-    }
-
-    IEnumerator EndAttack()
-    {
-        yield return new WaitForSeconds(0.2f);
         attacking = false;
     }
 
-
+    public void Attack()
+    {
+        if(walkDirection != 0 && canAttack)
+        {
+            StartCoroutine(Dash());
+        }
+    }
 }
