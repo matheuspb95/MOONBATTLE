@@ -31,6 +31,8 @@ public class MainScene : GenericSceneManager
                 {
                     obj2.GetComponent<LifeManager>().ReceiveAttack(obj1.GetComponent<Rigidbody2D>().velocity);
                     obj2.GetComponent<LifeManager>().LastAttacker = obj1.gameObject;
+                    obj1.GetComponent<Movement>().attacking = false;
+                    Debug.Log("Stop");
                     obj1.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 }
                 else if (obj1.GetComponent<Movement>().attacking && obj2.GetComponent<Movement>().attacking)

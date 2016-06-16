@@ -24,7 +24,7 @@ public class CenterGravity : MonoBehaviour {
                     b.drag = 3;
                 }else
                 {
-                    b.drag = 1;
+                    b.drag = 0;
                 }
                 if (MaxDistance > dist)
                 {

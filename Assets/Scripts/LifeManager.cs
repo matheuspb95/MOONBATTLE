@@ -19,6 +19,7 @@ public class LifeManager : MonoBehaviour {
         body = GetComponent<Rigidbody2D>();
         spawnPosition = transform.position;
         kills = 0;
+        
     }
 	
 	// Update is called once per frame
@@ -44,11 +45,13 @@ public class LifeManager : MonoBehaviour {
     {        
         Lifes--;
         LastAttacker.GetComponent<LifeManager>().Kill();
-        particles.transform.position = transform.position;
-        particles.SetActive(true);
+        GameObject NewPart = Instantiate(particles);
+        NewPart.transform.position = transform.position;
+        NewPart.transform.LookAt(GameObject.Find("Moon").transform);
+        NewPart.SetActive(true);
+        ui.DecreaseLife(lifesContainer);
         if (Lifes > 0)
-        {
-            ui.DecreaseLife(lifesContainer);           
+        {                      
             Spawn();
         }else
         {

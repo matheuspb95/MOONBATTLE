@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\DisableTime.cs" />
     <Compile Include="Assets\LoadScene.cs" />
+    <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\CenterGravity.cs" />
     <Compile Include="Assets\Scripts\GamePad.cs" />
     <Compile Include="Assets\Scripts\GenericSceneManager.cs" />

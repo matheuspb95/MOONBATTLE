@@ -11,6 +11,7 @@ public class Movement : ObjectController {
     public bool canAttack;
     public bool attacking;
     public ParticleSystem smoke;
+    public GameObject AttackEffect;
     public float DashTime;
     float walkDirection;
 	// Use this for initialization
@@ -83,22 +84,22 @@ public class Movement : ObjectController {
     IEnumerator Dash()
     {
         float EndTime = Time.time + DashTime;
-        while(EndTime > Time.time)
+        canAttack = false;
+        attacking = true;
+        AttackEffect.SetActive(true);
+        while (EndTime > Time.time && attacking)
         {
-            yield return new WaitForFixedUpdate();
-            attacking = true;
-            canAttack = false;
+            yield return new WaitForFixedUpdate();            
             if (walkDirection < 0) transform.localScale = new Vector3(2, -2);
             else if (walkDirection > 0) transform.localScale = new Vector3(-2, -2);
-            Debug.Log(body.rotation);
             body.rotation = body.rotation - 1f;
             float dirx = Mathf.Cos(Mathf.Deg2Rad * body.rotation);
             float diry = Mathf.Sin(Mathf.Deg2Rad * body.rotation);
-
             Vector2 vel = -AttackForce * new Vector2(dirx, diry) * walkDirection;
             body.velocity = vel;
         }
         body.velocity = Vector2.zero;
+        AttackEffect.SetActive(false);
         canAttack = true;
         attacking = false;
     }
