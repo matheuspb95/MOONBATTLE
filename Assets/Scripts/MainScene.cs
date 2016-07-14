@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class MainScene : GenericSceneManager
 {
+
     public GameObject gameOver;
     // Use this for initialization
     void Start()
@@ -13,7 +15,10 @@ public class MainScene : GenericSceneManager
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            SceneManager.LoadScene("Main");
+        }
     }
 
     public void GameOver()

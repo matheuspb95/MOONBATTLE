@@ -87,6 +87,7 @@ public class Movement : ObjectController {
         canAttack = false;
         attacking = true;
         AttackEffect.SetActive(true);
+        GetComponent<SpriteRenderer>().enabled = false;
         while (EndTime > Time.time && attacking)
         {
             yield return new WaitForFixedUpdate();            
@@ -100,6 +101,7 @@ public class Movement : ObjectController {
         }
         body.velocity = Vector2.zero;
         AttackEffect.SetActive(false);
+        GetComponent<SpriteRenderer>().enabled = true;
         canAttack = true;
         attacking = false;
     }

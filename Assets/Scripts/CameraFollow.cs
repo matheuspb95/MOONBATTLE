@@ -70,13 +70,20 @@ public class CameraFollow : MonoBehaviour {
         
         //MaxSize = LimitY;
         MaxSize = MinimalSize;
-        for(int i = 0; i < Targets.Count; i++){
-            for(int j = 0; j < Targets.Count; j++)
+        for (int i = 0; i < Targets.Count; i++)
+        { 
             {
-                if(i != j)
+                for (int j = 0; j < Targets.Count; j++)
                 {
-                    float dist = Vector2.Distance(Targets[i].position, Targets[j].position);
-                    if (dist > MaxSize) MaxSize = dist;
+                    if (i != j)
+                    {
+                    if(Targets[i] != null && Targets[j] != null)
+                    {
+                        float dist = Vector2.Distance(Targets[i].position, Targets[j].position);
+                        if (dist > MaxSize) MaxSize = dist;
+                    }
+                        
+                    }
                 }
             }
         }
