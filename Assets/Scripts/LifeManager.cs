@@ -44,27 +44,39 @@ public class LifeManager : MonoBehaviour {
     public void Die()
     {        
         Lifes--;
+        body.velocity = Vector2.zero;
+        GetComponent<Renderer>().enabled = false;
         LastAttacker.GetComponent<LifeManager>().Kill();
         GameObject NewPart = Instantiate(particles);
         NewPart.transform.position = transform.position;
         NewPart.transform.LookAt(GameObject.Find("Moon").transform);
         NewPart.SetActive(true);
         ui.DecreaseLife(lifesContainer);
-        if (Lifes > 0)
-        {                      
-            Spawn();
-        }else
-        {
-            Destroy(gameObject);
-            GameObject.FindObjectOfType<MainScene>().GameOver();
-        }
+
+        StartCoroutine(ReSpawn());
+        
+    }
+
+    IEnumerator ReSpawn()
+    {
+        yield return new WaitForSeconds(1f);
+        Spawn();
     }
 
     public void Spawn()
     {
-        body.velocity = Vector2.zero;
-        DamageTaken = 0;
-        ui.UpdateDamage(PlayerNumber, DamageTaken / 6);
-        transform.position = spawnPosition;
+        if (Lifes > 0)
+        {
+            GetComponent<Renderer>().enabled = true;
+            DamageTaken = 0;
+            ui.UpdateDamage(PlayerNumber, DamageTaken / 6);
+            transform.position = spawnPosition;
+        }
+        else
+        {
+            Destroy(gameObject);
+            GameObject.FindObjectOfType<MainScene>().GameOver();
+        }
+        
     }
 }

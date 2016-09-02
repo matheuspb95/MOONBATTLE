@@ -72,6 +72,9 @@
     <Compile Include="Assets\CRTEffect2.cs" />
     <Compile Include="Assets\CameraManager.cs" />
     <Compile Include="Assets\DisableTime.cs" />
+    <Compile Include="Assets\InputController.cs" />
+    <Compile Include="Assets\InputTest.cs" />
+    <Compile Include="Assets\LCDEffect.cs" />
     <Compile Include="Assets\LoadScene.cs" />
     <Compile Include="Assets\Scripts\CRT.cs" />
     <Compile Include="Assets\Scripts\CRTEffect.cs" />
@@ -87,12 +90,13 @@
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\Shoot.cs" />
     <Compile Include="Assets\Scripts\UiController.cs" />
+    <Compile Include="Assets\TextureDistortion.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\ColorLines.shader" />
     <None Include="Assets\Others\CRTShader.shader" />
     <None Include="Assets\Others\CRTShader2.shader" />
     <None Include="Assets\Others\Scanlines.shader" />
-    <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\CameraMotionBlur.shader" />
@@ -160,15 +164,7 @@
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\TiltShiftHdrLensBlur.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\frag_ao.cginc" />
-    <None Include="Assets\Standard Assets\Effects\Projectors\Guidelines.txt" />
-    <None Include="Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorLight.shader" />
-    <None Include="Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorMultiply.shader" />
-    <None Include="Assets\Standard Assets\Effects\TessellationShaders\Shaders\BumpedSpecularDisplacement.shader" />
-    <None Include="Assets\Standard Assets\Effects\TessellationShaders\Shaders\BumpedSpecularSmooth.shader" />
-    <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasic.shader" />
-    <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasicOutline.shader" />
-    <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
-    <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
+    <None Include="Assets\TextureDistortion.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

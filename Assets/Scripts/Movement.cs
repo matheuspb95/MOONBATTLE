@@ -65,7 +65,8 @@ public class Movement : ObjectController {
             Vector2 vel = -velocity * new Vector2(dirx, diry) * direction;
             if (vel.magnitude > maxVelocity)
                 vel = vel.normalized * maxVelocity;
-            body.AddForce(vel);
+            if(body.drag != 0)
+                body.AddForce(vel);
         }        
     }
 
@@ -80,6 +81,16 @@ public class Movement : ObjectController {
             body.AddForce(force);
         }        
     }
+
+    float ChargeStart;
+    float ChargeEnd;
+    float ChargeForce;
+    public void StartCharge()
+    {
+        ChargeStart = Time.time;
+        body.isKinematic = true;
+    }
+    
 
     IEnumerator Dash()
     {
@@ -108,9 +119,16 @@ public class Movement : ObjectController {
 
     public void Attack()
     {
+        body.isKinematic = false;
+        ChargeForce = Time.time - ChargeStart;
+        Vector2 Direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));        
+        body.AddForce(Direction * ChargeForce * AttackForce);
+
+        /*
         if(walkDirection != 0 && canAttack)
         {
             StartCoroutine(Dash());
         }
+        */
     }
 }
