@@ -70,21 +70,39 @@ public class Movement : ObjectController {
         }        
     }
 
+	public float JumpTime;
+	float PressedTime;
+	bool Maintain;
     public void Jump()
     {
-        if (canJump)
-        {
-            float dirx = Mathf.Cos(Mathf.Deg2Rad * (body.rotation - 90));
-            float diry = Mathf.Sin(Mathf.Deg2Rad * (body.rotation - 90));
+		PressedTime = JumpTime + Time.time;
+		if (canJump) {
+			Maintain = true;
+			float dirx = Mathf.Cos (Mathf.Deg2Rad * (body.rotation - 90));
+			float diry = Mathf.Sin (Mathf.Deg2Rad * (body.rotation - 90));
 
-            Vector2 force = new Vector2(dirx, diry) * JumpForce;
-            body.AddForce(force);
-        }        
+			Vector2 force = new Vector2 (dirx, diry) * JumpForce;
+			body.AddForce (force);
+		} else {
+			Maintain = false;
+		}
     }
 
+	public void MaintainJump(){
+		if (Time.time < PressedTime) {
+			if (Maintain) {
+				float dirx = Mathf.Cos(Mathf.Deg2Rad * (body.rotation - 90));
+				float diry = Mathf.Sin(Mathf.Deg2Rad * (body.rotation - 90));
+
+				Vector2 force = new Vector2(dirx, diry) * JumpForce;
+				body.AddForce(force / 20);	
+			}			
+		}
+	}
+
+
     float ChargeStart;
-    float ChargeEnd;
-    float ChargeForce;
+    public float ChargeForce;
     public void StartCharge()
     {
         ChargeStart = Time.time;
@@ -122,8 +140,9 @@ public class Movement : ObjectController {
         body.isKinematic = false;
         ChargeForce = Time.time - ChargeStart;
         Vector2 Direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));        
-        body.AddForce(Direction * ChargeForce * AttackForce);
-
+        body.AddForce(Direction * ChargeForce * AttackForce * 50);
+		attacking = true;
+		StartCoroutine (EndAttack ());
         /*
         if(walkDirection != 0 && canAttack)
         {
@@ -131,4 +150,10 @@ public class Movement : ObjectController {
         }
         */
     }
+
+	IEnumerator EndAttack(){
+		yield return new WaitForSeconds (0.75f);
+		attacking = false;
+		ChargeForce = 0;
+	}
 }

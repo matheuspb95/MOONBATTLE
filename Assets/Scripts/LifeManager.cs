@@ -3,7 +3,7 @@ using System.Collections;
 
 public class LifeManager : MonoBehaviour {
     public int kills;
-    public int DamageTaken;
+    public float DamageTaken;
     public int Lifes;
     public float initialLaunchForce;
     public int PlayerNumber;
@@ -27,12 +27,12 @@ public class LifeManager : MonoBehaviour {
 	
 	}
 
-    public void ReceiveAttack(Vector2 direction)
+	public void ReceiveAttack(Vector2 direction, float AttackForce)
     {
         Vector2 vel = (initialLaunchForce + DamageTaken) * direction.normalized;
         body.AddForce(vel);
-        DamageTaken += 50;
-        ui.UpdateDamage(PlayerNumber, DamageTaken / 6);
+        DamageTaken += 100 * AttackForce;
+        ui.UpdateDamage(PlayerNumber, DamageTaken/10);
     }
 
     public void Kill()
@@ -43,18 +43,19 @@ public class LifeManager : MonoBehaviour {
 
     public void Die()
     {        
-        Lifes--;
-        body.velocity = Vector2.zero;
-        GetComponent<Renderer>().enabled = false;
-        LastAttacker.GetComponent<LifeManager>().Kill();
-        GameObject NewPart = Instantiate(particles);
-        NewPart.transform.position = transform.position;
-        NewPart.transform.LookAt(GameObject.Find("Moon").transform);
-        NewPart.SetActive(true);
-        ui.DecreaseLife(lifesContainer);
+		if (LastAttacker != null) {
+			Lifes--;
+			body.velocity = Vector2.zero;
+			GetComponent<Renderer> ().enabled = false;
+			LastAttacker.GetComponent<LifeManager> ().Kill ();
+			GameObject NewPart = Instantiate (particles);
+			NewPart.transform.position = transform.position;
+			NewPart.transform.LookAt (GameObject.Find ("Moon").transform);
+			NewPart.SetActive (true);
+			ui.DecreaseLife (lifesContainer);
 
-        StartCoroutine(ReSpawn());
-        
+			StartCoroutine (ReSpawn ());
+		}
     }
 
     IEnumerator ReSpawn()

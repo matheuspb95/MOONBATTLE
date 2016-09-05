@@ -11,16 +11,19 @@ public class InputController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetButtonDown("Jump"))
-        {
-            move.Jump();
-        }
+		if (Input.GetButtonDown ("Jump")) {
+			move.Jump ();
+		} else if (Input.GetButton ("Jump")) {
+			move.MaintainJump();
+		}
 
         x = Input.GetAxis("Horizontal");
-        if (x != 0)
-        {
-            move.Walk(x);
-        }
+		if (x != 0) {
+			move.Walk (x);
+			move.SetEmission (true);
+		} else {
+			move.SetEmission (false);
+		}
         if (Input.GetButtonDown("Fire3"))
         {
             //move.Attack();
