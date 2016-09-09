@@ -102,9 +102,10 @@ public class Movement : ObjectController {
 
 
     float ChargeStart;
-    public float ChargeForce;
+    public float ChargeForce, MinForce, MaxForce;
     public void StartCharge()
     {
+        canAttack = false;
         ChargeStart = Time.time;
         body.isKinematic = true;
     }
@@ -137,10 +138,14 @@ public class Movement : ObjectController {
 
     public void Attack()
     {
+        AttackEffect.SetActive(true);
         body.isKinematic = false;
-        ChargeForce = Time.time - ChargeStart;
-        Vector2 Direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));        
-        body.AddForce(Direction * ChargeForce * AttackForce * 50);
+        ChargeForce = (Time.time - ChargeStart);
+        Vector2 Direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        Vector2 force = Direction * ChargeForce * AttackForce * 50;
+        if (force.magnitude < MinForce) force = force.normalized * MinForce;
+        else if (force.magnitude > MaxForce) force = force.normalized * MaxForce;
+        body.AddForce(force);
 		attacking = true;
 		StartCoroutine (EndAttack ());
         /*
@@ -154,6 +159,8 @@ public class Movement : ObjectController {
 	IEnumerator EndAttack(){
 		yield return new WaitForSeconds (0.75f);
 		attacking = false;
-		ChargeForce = 0;
-	}
+        canAttack = true;
+        ChargeForce = 0;
+        AttackEffect.SetActive(false);
+    }
 }

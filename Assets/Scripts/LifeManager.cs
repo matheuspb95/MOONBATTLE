@@ -9,7 +9,7 @@ public class LifeManager : MonoBehaviour {
     public int PlayerNumber;
     Rigidbody2D body;
     public GameObject LastAttacker;
-    public GameObject lifesContainer;
+    public DamageController damageCtrl;
     public GameObject particles;
     Vector3 spawnPosition;
     UiController ui;
@@ -29,10 +29,10 @@ public class LifeManager : MonoBehaviour {
 
 	public void ReceiveAttack(Vector2 direction, float AttackForce)
     {
-        Vector2 vel = (initialLaunchForce + DamageTaken) * direction.normalized;
+        Vector2 vel = (initialLaunchForce + DamageTaken/2) * direction.normalized;
         body.AddForce(vel);
         DamageTaken += 100 * AttackForce;
-        ui.UpdateDamage(PlayerNumber, DamageTaken/10);
+        damageCtrl.SetDamage(DamageTaken/10);
     }
 
     public void Kill()
@@ -52,9 +52,8 @@ public class LifeManager : MonoBehaviour {
 			NewPart.transform.position = transform.position;
 			NewPart.transform.LookAt (GameObject.Find ("Moon").transform);
 			NewPart.SetActive (true);
-			ui.DecreaseLife (lifesContainer);
-
-			StartCoroutine (ReSpawn ());
+            damageCtrl.SetDamage(0);
+            StartCoroutine (ReSpawn ());
 		}
     }
 

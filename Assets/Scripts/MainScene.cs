@@ -52,8 +52,11 @@ public class MainScene : GenericSceneManager
             }else if (obj2.CompareTag("Moon"))
             {
                 obj1.GetComponent<Movement>().canJump = true;
-                //obj1.GetComponent<Rigidbody2D>().drag = 3;
-            }else if (obj2.CompareTag("Limits"))
+                obj1.GetComponent<Movement>().attacking = false;
+                obj1.GetComponent<Movement>().canAttack = true;
+
+            }
+            else if (obj2.CompareTag("Limits"))
             {
                 obj1.GetComponent<LifeManager>().Die();
             }
@@ -68,6 +71,9 @@ public class MainScene : GenericSceneManager
             {
                 obj1.GetComponent<Movement>().canJump = false;
                 //obj1.GetComponent<Rigidbody2D>().drag = 0;
+            }else if (obj2.CompareTag("Limits"))
+            {
+                obj1.GetComponent<LifeManager>().Die();
             }
         }
     }
